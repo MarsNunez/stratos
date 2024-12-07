@@ -4,25 +4,38 @@ import { User } from "../models/userModel.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const users = await User.find({});
-  res.status(200).json(users);
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 router.post("/create", async (req, res) => {
-  const {
-    email,
-    password,
-    current_location,
-    future_location,
-    username,
-    alias,
-    social,
-    tags,
-    portfolio,
-    bio,
-  } = req.body;
-
   try {
+    const {
+      email,
+      password,
+      current_location,
+      future_location,
+      username,
+      alias,
+      social,
+      tags,
+      portfolio,
+      bio,
+    } = req.body;
     const existingEmail = await User.findOne({ email });
     const existingUsername = await User.findOne({ username });
 

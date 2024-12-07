@@ -3,6 +3,7 @@ import { MONGODBURL, PORT } from "./config.js";
 import mongoose from "mongoose";
 import cors from "cors";
 import usersRoute from "./routes/userRoutes.js";
+import postsRoute from "./routes/postRoutes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", usersRoute);
+app.use("/posts", postsRoute);
 
 mongoose
   .connect(MONGODBURL)
