@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "./ThemeContext";
+import MainWrapper from "./wrappers/MainWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,11 +28,11 @@ export default function RootLayout({ children }) {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-100`}
-      >
-        {children}
-      </body>
+      <ThemeProvider>
+        <MainWrapper geistSans={geistSans} geistMono={geistMono}>
+          {children}
+        </MainWrapper>
+      </ThemeProvider>
     </html>
   );
 }
